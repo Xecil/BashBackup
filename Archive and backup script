@@ -27,3 +27,23 @@ now=$(date +"%H:%M:%S")
 currentDate=$(date +"%y-%m-%d")
 hostname=$(hostname -s)
 archive_file="$hostname-$currentDate.tgz"
+
+# Inform that the process is starting 
+
+echo "Backing up $backup_files to $dest/$archive_file"
+echo "The process is starting."
+
+# Print the start time 
+
+
+echo Script start time: "$now"
+
+# Back up the files using the tar command
+
+tar -czPf $dest/$archive_file $backup_files
+
+# Print the end status message
+
+echo "Backup Is Complete"
+now=$(date +"%H:%M:%S")
+echo Script end time: "$now"
