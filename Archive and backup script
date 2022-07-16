@@ -1,0 +1,29 @@
+#!/bin/bash
+
+###     Title:          Archive and backup script
+###     Date:           16 July 2022
+###     Author:         CJ Glawson
+###     Version:        1.0.0
+
+
+# The path of the folder you want to back up (change to folder of choice)
+
+backup_files="/home/"
+
+# The backup destination path (change from tmp otherwise it will be deleted upon system reboot)
+dest="/tmp"
+
+# Create a variable for the start and end times
+
+# date command will take the current time when the now variable is called
+# %H will format output to show the hour when variable is called
+# %M will format output to show the minutes when variable is called
+# %S will format output to show the seconds when the variable is called
+
+now=$(date +"%H:%M:%S")
+
+# Create the archive filename
+
+currentDate=$(date +"%y-%m-%d")
+hostname=$(hostname -s)
+archive_file="$hostname-$currentDate.tgz"
