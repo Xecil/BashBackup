@@ -3,47 +3,57 @@
 ###     Title:          Archive and backup script
 ###     Date:           16 July 2022
 ###     Author:         CJ Glawson
-###     Version:        1.0.0
+###     Version:        1.0.1
 
-
-# The path of the folder you want to back up (change to folder of choice)
-
+# Setting Variables
+# Path of folder to backup
 backup_files="/home/"
 
-# The backup destination path (change from tmp otherwise it will be deleted upon system reboot)
+# Path of Destination Folder/Path of the backup
 dest="/tmp"
 
-# Create a variable for the start and end times
-
-# date command will take the current time when the now variable is called
-# %H will format output to show the hour when variable is called
-# %M will format output to show the minutes when variable is called
-# %S will format output to show the seconds when the variable is called
-
+# **********************
+# Setting our Start Time
+# **********************
 now=$(date +"%H:%M:%S")
 
-# Create the archive filename
-
+# Setting values for our filename/archive file
 currentDate=$(date +"%y-%m-%d")
 hostname=$(hostname -s)
 archive_file="$hostname-$currentDate.tgz"
 
-# Inform that the process is starting 
+# ******************************************************
+# Let the user know that backup is starting/running...
+# ******************************************************
 
-echo "Backing up $backup_files to $dest/$archive_file"
-echo "The process is starting."
+# Clear Display
+clear;
 
-# Print the start time 
+echo "Backup up $backup_files to $archive_file"
+echo "Process is starting"
+
+# ********************
+# Print the Start Time
+# ********************
+echo SCript start time: "$now"
+
+# ******************************
+# Backup the files using Tar Gz
+# ******************************
+# >> you need to download pv command for this to work ->- apt install pv
+# original tar command from exercise
+# tar -czPf $dest/$archive_file $backupfiles
+#           ## piped to pv command to show progress - shows progress animation ##
+tar -czPf - $backup_files   | (pv -p --timer --rate --bytes > $dest/$archive_file )
 
 
-echo Script start time: "$now"
-
-# Back up the files using the tar command
-
-tar -czPf $dest/$archive_file $backup_files
-
+# *****************************
 # Print the end status message
-
-echo "Backup Is Complete"
+# *****************************
+echo "Backup finished!";
+# ********************************
+# Need to set end time to now var
+# ********************************
 now=$(date +"%H:%M:%S")
+
 echo Script end time: "$now"
